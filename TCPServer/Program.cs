@@ -47,8 +47,12 @@ namespace TCPServer
                 int bytesRead = stream.Read(buffer, 0, buffer.Length);
                 string message = Encoding.ASCII.GetString(buffer, 0, bytesRead);
 
-                // Log the message
-                Console.WriteLine("Received message: " + message);
+                // Check if the message is not empty
+                if (!string.IsNullOrEmpty(message))
+                {
+                    // Log the message
+                    Console.WriteLine("Received message: " + message);
+                }
 
                 // Check if the message is the "keep alive" message
                 if (message.Trim() == "keep alive")
