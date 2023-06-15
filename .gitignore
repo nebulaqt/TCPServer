@@ -1,3 +1,4 @@
 /.vs/
-/TCPServer/bin/
-/TCPServer/obj/
+/TCPServer/TCPServer/bin/
+/TCPServer/TCPServer/obj/
+/TCPServer/.idea/
