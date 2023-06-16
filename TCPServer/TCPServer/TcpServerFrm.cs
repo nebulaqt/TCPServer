@@ -107,7 +107,10 @@ namespace TCPServer
             if (_isServerRunning)
                 return;
 
-            _listener = new TcpListener(IPAddress.Any, 1252); // Create a TCP listener on all available network interfaces and port 1252
+            string input = portTb.Text; // PortTb is the TextBox containing the numeric value
+            int port = Convert.ToInt32(input);
+
+            _listener = new TcpListener(IPAddress.Any, port); // Create a TCP listener on all available network interfaces and port 1252
             _listener.Start(); // Start listening for incoming connections
             _isServerRunning = true; // Set the server running flag to true
             startBtn.Enabled = false; // Disable the Start button
@@ -135,6 +138,16 @@ namespace TCPServer
             _cancellationTokenSource = null; // Set the cancellation token source to null
             stopBtn.Enabled = false; // Disable the Stop button
             startBtn.Enabled = true; // Enable the Start button
+        }
+
+        private void portTb_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            // Check if the pressed key is a number or a control key (backspace, delete, etc.)
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+            {
+                // Cancel the key press event
+                e.Handled = true;
+            }
         }
     }
 }

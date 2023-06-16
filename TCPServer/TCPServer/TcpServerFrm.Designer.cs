@@ -33,6 +33,8 @@
             this.stopBtn = new System.Windows.Forms.Button();
             this.statusLb = new System.Windows.Forms.Label();
             this.logRtb = new System.Windows.Forms.RichTextBox();
+            this.portTb = new System.Windows.Forms.NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)(this.portTb)).BeginInit();
             this.SuspendLayout();
             // 
             // startBtn
@@ -79,18 +81,40 @@
             this.logRtb.TabStop = false;
             this.logRtb.Text = "";
             // 
+            // portTb
+            // 
+            this.portTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.portTb.Location = new System.Drawing.Point(232, 20);
+            this.portTb.Maximum = new decimal(new int[] {
+            10000,
+            0,
+            0,
+            0});
+            this.portTb.Name = "portTb";
+            this.portTb.Size = new System.Drawing.Size(120, 16);
+            this.portTb.TabIndex = 5;
+            this.portTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.portTb.Value = new decimal(new int[] {
+            1252,
+            0,
+            0,
+            0});
+            // 
             // TcpServerFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 261);
+            this.Controls.Add(this.portTb);
             this.Controls.Add(this.logRtb);
             this.Controls.Add(this.statusLb);
             this.Controls.Add(this.stopBtn);
             this.Controls.Add(this.startBtn);
             this.Name = "TcpServerFrm";
             this.Text = "TCPServer";
+            ((System.ComponentModel.ISupportInitialize)(this.portTb)).EndInit();
             this.ResumeLayout(false);
+
         }
 
         private System.Windows.Forms.RichTextBox logRtb;
@@ -101,5 +125,7 @@
         private System.Windows.Forms.Button stopBtn;
 
         #endregion
+
+        private System.Windows.Forms.NumericUpDown portTb;
     }
 }
