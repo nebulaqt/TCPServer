@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using System.Text;
@@ -33,13 +34,16 @@ namespace TCPServer
                 {
                     if (stream.DataAvailable) // Check if there is data available to read from the stream
                     {
-                        var bytesRead = stream.Read(buffer, 0, buffer.Length); // Read data from the stream into the buffer
-                        var message = Encoding.ASCII.GetString(buffer, 0, bytesRead); // Convert the received bytes to a string
+                        var bytesRead =
+                            stream.Read(buffer, 0, buffer.Length); // Read data from the stream into the buffer
+                        var message =
+                            Encoding.ASCII.GetString(buffer, 0, bytesRead); // Convert the received bytes to a string
                         var clientEndPoint = client.Client.RemoteEndPoint as IPEndPoint; // Get the client's IP endpoint
 
                         if (!string.IsNullOrEmpty(message)) // Check if the received message is not empty
                         {
-                            var logMessage = $"Received message from {clientEndPoint}: {message}\n"; // Create a log message
+                            var logMessage =
+                                $"Received message from {clientEndPoint}: {message}\n"; // Create a log message
                             AppendToLog(logMessage); // Append the log message to the logRichTextBox
                         }
 
@@ -67,11 +71,11 @@ namespace TCPServer
         private void AcceptClients()
         {
             while (_isServerRunning)
-            {
                 try
                 {
                     var client = _listener.AcceptTcpClient(); // Accept an incoming TCP client connection
-                    ThreadPool.QueueUserWorkItem(state => HandleClient(client)); // Queue the client for processing on a thread pool thread
+                    ThreadPool.QueueUserWorkItem(state =>
+                        HandleClient(client)); // Queue the client for processing on a thread pool thread
                 }
                 catch (ObjectDisposedException)
                 {
@@ -82,7 +86,6 @@ namespace TCPServer
                 {
                     Console.WriteLine(@"Error occurred while accepting client: " + ex.Message);
                 }
-            }
         }
 
         private void AppendToLog(string logMessage)
@@ -107,10 +110,11 @@ namespace TCPServer
             if (_isServerRunning)
                 return;
 
-            string input = portTb.Text; // PortTb is the TextBox containing the numeric value
-            int port = Convert.ToInt32(input);
+            var input = portTb.Text; // PortTb is the TextBox containing the numeric value
+            var port = Convert.ToInt32(input);
 
-            _listener = new TcpListener(IPAddress.Any, port); // Create a TCP listener on all available network interfaces and port 1252
+            _listener = new TcpListener(IPAddress.Any,
+                port); // Create a TCP listener on all available network interfaces and port 1252
             _listener.Start(); // Start listening for incoming connections
             _isServerRunning = true; // Set the server running flag to true
             startBtn.Enabled = false; // Disable the Start button
@@ -118,7 +122,9 @@ namespace TCPServer
 
             _cancellationTokenSource = new CancellationTokenSource(); // Create a new cancellation token source
             // Update label with IP address and port
-            statusLb.Text = @"Status: Running " + _listener.LocalEndpoint; // Set the status label text to the server's local endpoint
+            statusLb.Text =
+                @"Status: Running " +
+                _listener.LocalEndpoint; // Set the status label text to the server's local endpoint
 
             _acceptClientsThread = new Thread(AcceptClients); // Create a new thread for accepting clients
             _acceptClientsThread.Start(); // Start the thread for accepting clients
@@ -140,14 +146,34 @@ namespace TCPServer
             startBtn.Enabled = true; // Enable the Start button
         }
 
-        private void portTb_KeyPress(object sender, KeyPressEventArgs e)
+        private void TcpServerFrm_Load(object sender, EventArgs e)
         {
-            // Check if the pressed key is a number or a control key (backspace, delete, etc.)
-            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-            {
-                // Cancel the key press event
-                e.Handled = true;
-            }
+            ApplyDarkTheme();
+        }
+
+        private void ApplyDarkTheme()
+        {
+            // Set the form's background color
+            BackColor = Color.FromArgb(30, 30, 30);
+
+            // Set the colors for individual controls
+            ApplyControlTheme(this);
+        }
+
+        private static void ApplyControlTheme(Control control)
+        {
+            // Set the control's background color
+            control.BackColor = Color.FromArgb(30, 30, 30);
+
+            // Set the control's text color
+            control.ForeColor = Color.White;
+
+            // Set the text color for disabled controls
+            if (!control.Enabled) control.BackColor = Color.DarkGray;
+
+            // Recursively apply the theme to child controls if applicable
+            if (!control.HasChildren) return;
+            foreach (Control childControl in control.Controls) ApplyControlTheme(childControl);
         }
     }
 }

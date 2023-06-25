@@ -85,20 +85,12 @@
             // 
             this.portTb.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.portTb.Location = new System.Drawing.Point(232, 20);
-            this.portTb.Maximum = new decimal(new int[] {
-            10000,
-            0,
-            0,
-            0});
+            this.portTb.Maximum = new decimal(new int[] { 10000, 0, 0, 0 });
             this.portTb.Name = "portTb";
             this.portTb.Size = new System.Drawing.Size(120, 16);
             this.portTb.TabIndex = 5;
             this.portTb.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.portTb.Value = new decimal(new int[] {
-            1252,
-            0,
-            0,
-            0});
+            this.portTb.Value = new decimal(new int[] { 1252, 0, 0, 0 });
             // 
             // TcpServerFrm
             // 
@@ -110,11 +102,15 @@
             this.Controls.Add(this.statusLb);
             this.Controls.Add(this.stopBtn);
             this.Controls.Add(this.startBtn);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "TcpServerFrm";
+            this.ShowIcon = false;
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "TCPServer";
+            this.Load += new System.EventHandler(this.TcpServerFrm_Load);
             ((System.ComponentModel.ISupportInitialize)(this.portTb)).EndInit();
             this.ResumeLayout(false);
-
         }
 
         private System.Windows.Forms.RichTextBox logRtb;
